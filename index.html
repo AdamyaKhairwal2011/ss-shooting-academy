@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotebookLM | Vasuki Itech</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f8f9fa;
+            --bg-sidebar: #ffffff;
+            --bg-card: #ffffff;
+            --border-color: #e0e2e6;
+            --text-primary: #1f1f1f;
+            --text-secondary: #5f6368;
+            --accent-color: #1a73e8;
+            --accent-light: #e8f0fe;
+            --font-sans: 'Google Sans', 'Roboto', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar - Classic NotebookLM Source Panel Layout */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .sidebar-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .source-pill {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .source-icon {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Main Workspace Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Top Header Navigation */
+        .top-nav {
+            height: 64px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background-color: var(--bg-sidebar);
+        }
+
+        .notebook-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Central Chat/Interaction Space */
+        .workspace {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* NotebookLM AI Response Style Card */
+        .ai-response-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 680px;
+            padding: 32px;
+            margin-bottom: 80px; /* Space for the bottom input bar */
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent-color);
+            margin-bottom: 16px;
+        }
+
+        .status-badge {
+            background-color: var(--accent-light);
+            color: var(--accent-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .ai-content h1 {
+            font-size: 28px;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .ai-content p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .company-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px transparent;
+            transition: border-color 0.2s;
+        }
+
+        .company-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Bottom Floating Input Bar (Signature NotebookLM Style) */
+        .input-container {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 680px;
+            padding: 0 20px;
+        }
+
+        .input-bar {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            justify-content: space-between;
+        }
+
+        .input-placeholder {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .send-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--bg-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <div class="main-content">
+        <div class="top-nav">
+            <div class="notebook-title">SS Shooting Academy</div>
+            <div style="color: var(--text-secondary); font-size: 14px;">v1.0.0</div>
+        </div>
+
+        <div class="workspace">
+            
+            <div class="ai-response-card">
+                <div class="ai-header">
+                    <span>Studio Guide</span>
+                </div>
+                
+                <span class="status-badge">Under Development</span>
+                
+                <div class="ai-content">
+                    <h1>This space is actively being synthesized.</h1>
+                    <p>
+                        Welcome to the workspace. This page is currently under development by 
+                        <a href="https://vasuki.cloud" target="_blank" class="company-link">Vasuki Itech</a>. 
+                        We are structuring the core architecture and compiling the intelligence nodes. Check back shortly for the fully realized environment.
+                    </p>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-bar">
+                    <span class="input-placeholder">Ask a question about this deployment...</span>
+                    <div class="send-icon">→</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
